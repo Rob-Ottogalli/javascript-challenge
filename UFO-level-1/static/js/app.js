@@ -11,19 +11,21 @@ var tableData = data;
 var tbody = d3.select("tbody");
 
 // Loop through each row in table
-tableData.forEach(function(UFOReport) {
-    // Use d3 to append one table row "tr" for each UFO object
-    var row = tbody.append("tr");
+function init() {
+    tableData.forEach(function(UFOReport) {
+        // Use d3 to append one table row "tr" for each UFO object
+        var row = tbody.append("tr");
 
-    // Use "Object.entries" to console.log each UFO object value
-    Object.entries(UFOReport).forEach(function ([key, value]) {
+        // Use "Object.entries" to console.log each UFO object value
+        Object.entries(UFOReport).forEach(function ([key, value]) {
 
-        // Use d3 to append 1 cell per UFO report value 
-        var cell = row.append("td");
-        // Use d3 to update each cell's text with UFO object value
-        cell.text(value);
+            // Use d3 to append 1 cell per UFO report value 
+            var cell = row.append("td");
+            // Use d3 to update each cell's text with UFO object value
+            cell.text(value);
+        });
     });
-});
+}
 
 
 // -----------------------------------
@@ -46,21 +48,6 @@ function runEnter() {
     // Prevent the page from refreshing
     d3.event.preventDefault();
   
-    // // Clear the current data in the table
-    // tableData.forEach(function(UFOReport) {
-    //     // Use d3 to append one table row "tr" for each UFO object
-    //     var row = tbody.append("tr");
-    
-    //     // Use "Object.entries" to console.log each UFO object value
-    //     Object.entries(UFOReport).forEach(function ([key, value]) {
-    
-    //         // Use d3 to append 1 cell per UFO report value 
-    //         var cell = row.remove("td");
-    //         // Use d3 to update each cell's text with UFO object value
-    //         cell.text("");
-    //     });
-    // });
-
     // Select the input element and get the raw HTML node
     var inputElement = d3.select("#datetime");
 
@@ -72,19 +59,23 @@ function runEnter() {
     var filtered = tableData.filter(tableData => tableData.datetime === inputValue);
     console.log(filtered);
     
-    // Loop through each row in table
-    filtered.forEach(function(UFOReport) {
-        // Use d3 to append one table row "tr" for each UFO object
-        var row = tbody.append("tr");
+    var table = document.getElementById("ufo-table");
+    var tr = table.getElementsByTagName("tr");
 
-        // Use "Object.entries" to console.log each UFO object value
-        Object.entries(UFOReport).forEach(function ([key, value]) {
+    for (i=1; i<tr.length; i++) {
+        var td = tr[i].getElementsByTagName("td")[0];
 
-            // Use d3 to append 1 cell per UFO report value 
-            var cell = row.append("td");
-            // Use d3 to update each cell's text with UFO object value
-            cell.text(value);
-        });
-    });
+        // if (td) {
+        var textValue = td.textContent || td.innerText;
+        if (textValue === inputValue) {
+            tr[i].style.display = "";
+        }
+        else {
+            tr[i].style.display = "none";
+        }
+        // }
+    }
     
   };
+
+init();
