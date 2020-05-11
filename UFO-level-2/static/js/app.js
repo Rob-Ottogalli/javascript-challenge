@@ -41,6 +41,31 @@ var form = d3.select("#form");
 button.on("click", runEnter);
 form.on("submit", runEnter);
 
+// // Define function to filter out (hide) cells from the UFO table
+// // Function takes 2 inputs:
+// // "value" is the input value from the filter
+// // "x" is the cell in the table
+// function hideCells(value, x) {
+//     // Set variable to hold all table
+//     var table = document.getElementById("ufo-table");
+//     // Set variable to hold table row
+//     var tr = table.getElementsByTagName("tr");
+//     // Loop through table
+//     for (i=1; i<tr.length; i++) {
+//         // Set variable to hold data for cell of row
+//         var td = tr[i].getElementsByTagName("td")[x];
+
+//         // Set variable to hold cell text
+//         var textValue = td.textContent || td.innerText;
+
+//         // If cell value is equal to filter input value,
+//         if (textValue === value) {
+//             // then leave that row in visible format.
+//             tr[i].style.display = "";
+//         }
+//     }
+// }
+
 // Complete the event handler function for the form
 function runEnter() {
 
@@ -48,11 +73,14 @@ function runEnter() {
     d3.event.preventDefault();
   
     // Select the input element and get the raw HTML node
-    var inputElement = d3.select("#datetime");
+    var inputDate = d3.select("#datetime");
+    var inputState = d3.select("#state");
 
     // Get the value property of the input element
-    var inputValue = inputElement.property("value");
-    
+    var dateValue = inputDate.property("value");
+    var stateValue = inputState.property("value");
+
+
     // Set variable to hold all table
     var table = document.getElementById("ufo-table");
 
@@ -60,7 +88,7 @@ function runEnter() {
     var tr = table.getElementsByTagName("tr");
 
     // If inputValue is null,
-    if (inputValue === "") {
+    if (dateValue === "" && stateValue === "") {
         // then apply visible formatting to all rows.
         for (i=1; i<tr.length; i++) {
             tr[i].style.display = "";
@@ -68,21 +96,32 @@ function runEnter() {
     }
     // If not, then filter rows, and hide unfiltered rows.
     else {
-    // Loop through table
+        // Loop through table
         for (i=1; i<tr.length; i++) {
             // Set variable to hold data for Datetime cell of row
-            var td = tr[i].getElementsByTagName("td")[0];
+            var tdDate = tr[i].getElementsByTagName("td")[0];
+            var tdState = tr[i].getElementsByTagName("td")[2];
 
             // Set variable to hold hold Datetime cell text
-            var textValue = td.textContent || td.innerText;
+            var cellDate = tdDate.textContent || tdDate.innerText;
+            var cellState = tdState.textContent || tdState.innerText;
 
-            // If cell Datetime is equal to inputValue Datetime,
-            if (textValue === inputValue) {
+            // If cellDate and cellState are selected,
+            if (cellDate === dateValue && cellState === stateValue) {
                 // then leave that row in visible format.
                 tr[i].style.display = "";
             }
-
-            // If cell Datetime is not equal to inputValue Datetime,
+            // If cell Datetime is selected,
+            else if (cellDate === dateValue) {
+                // then leave that row in visible format.
+                tr[i].style.display = "";
+            }
+            // If State is selected,
+            else if (cellState === stateValue) {
+                // then leave that row in visible format.
+                tr[i].style.display = "";
+            }
+            // If cell value is not equal to dateValue and stateValue,
             else {
                 // then apply invisible format to row.
                 tr[i].style.display = "none";
