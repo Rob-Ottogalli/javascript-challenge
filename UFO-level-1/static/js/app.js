@@ -53,28 +53,45 @@ function runEnter() {
 
     // Get the value property of the input element
     var inputValue = inputElement.property("value");
-    console.log(inputValue);
-
-    // Use the form input to filter the data by blood type
-    var filtered = tableData.filter(tableData => tableData.datetime === inputValue);
-    console.log(filtered);
     
+    // Set variable to hold all table
     var table = document.getElementById("ufo-table");
+
+    // Set variable to hold table row
     var tr = table.getElementsByTagName("tr");
 
-    for (i=1; i<tr.length; i++) {
-        var td = tr[i].getElementsByTagName("td")[0];
-
-        // if (td) {
-        var textValue = td.textContent || td.innerText;
-        if (textValue === inputValue) {
+    // If inputValue is null,
+    if (inputValue === "") {
+        // then apply visible formatting to all rows.
+        for (i=1; i<tr.length; i++) {
             tr[i].style.display = "";
         }
-        else {
-            tr[i].style.display = "none";
-        }
-        // }
     }
+    // If not, then filter rows, and hide unfiltered rows.
+    else {
+    // Loop through table
+        for (i=1; i<tr.length; i++) {
+            // Set variable to hold data for Datetime cell of row
+            var td = tr[i].getElementsByTagName("td")[0];
+
+            // Set variable to hold hold Datetime cell text
+            var textValue = td.textContent || td.innerText;
+
+            // If cell Datetime is equal to inputValue Datetime,
+            if (textValue === inputValue) {
+                // then leave that row in visible format.
+                tr[i].style.display = "";
+            }
+
+            // If cell Datetime is not equal to inputValue Datetime,
+            else {
+                // then apply invisible format to row.
+                tr[i].style.display = "none";
+            }
+        }
+    }
+    
+
     
   };
 
