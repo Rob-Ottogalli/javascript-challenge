@@ -98,51 +98,70 @@ function runEnter() {
     // // If not, then filter rows, and hide unfiltered rows.
     // else {
 
-    // If both cellDate and cellState are selected,
-    if (dateValue !== "" && stateValue !== "") {
-        for (i=1; i<tr.length; i++) {
-            // Set variable to hold data for Datetime cell of row
-            var tdDate = tr[i].getElementsByTagName("td")[0];
-            var tdState = tr[i].getElementsByTagName("td")[2];
+    // // If both cellDate and cellState are selected,
+    // if (dateValue !== "" && stateValue !== "") {
+    //     for (i=1; i<tr.length; i++) {
+    //         // Set variable to hold data for Datetime cell of row
+    //         var tdDate = tr[i].getElementsByTagName("td")[0];
+    //         var tdState = tr[i].getElementsByTagName("td")[2];
     
-            // Set variable to hold hold Datetime cell text
-            var cellDate = tdDate.textContent;
-            var cellState = tdState.textContent;
+    //         // Set variable to hold hold Datetime cell text
+    //         var cellDate = tdDate.textContent;
+    //         var cellState = tdState.textContent;
 
+    //         // then leave that row in visible format.
+    //         tr[i].style.display = "";
+    //     }
+    // }
+    // If only one or none is selected,
+    // else { 
+        // Loop through table
+    for (i=1; i<tr.length; i++) {
+        // Set variable to hold data for Datetime cell of row
+        var tdDate = tr[i].getElementsByTagName("td")[0];
+        var tdState = tr[i].getElementsByTagName("td")[2];
+
+        // Set variable to hold hold Datetime cell text
+        var cellDate = tdDate.textContent;
+        var cellState = tdState.textContent;
+        var dateValueCopy = dateValue;
+        var stateValueCopy = stateValue;
+
+        if (dateValue.length === 0) {
+            dateValue = cellDate;
+            console.log("Null");
+        }
+        if (stateValue.length === 0) {
+            stateValue = cellState;
+            console.log("Null");
+        }
+
+        if (cellDate === dateValue && cellState === stateValue) {
             // then leave that row in visible format.
             tr[i].style.display = "";
         }
+
+        // If cell Datetime is selected,
+        // else {
+        // if (cellDate === dateValue) {
+        //     // then leave that row in visible format.
+        //     tr[i].style.display = "";
+        // }
+        // // If State is selected,
+        // else if (cellState === stateValue) {
+        //     // then leave that row in visible format.
+        //     tr[i].style.display = "";
+        // }
+        // // If cell value is not equal to dateValue and stateValue,
+        // else {
+        //     // then apply invisible format to row.
+        //     tr[i].style.display = "none";
+        // }
+        // }
+        dateValue = dateValueCopy;
+        stateValue = stateValueCopy;
     }
-    // If only one or none is selected,
-    else { 
-        // Loop through table
-        for (i=1; i<tr.length; i++) {
-            // Set variable to hold data for Datetime cell of row
-            var tdDate = tr[i].getElementsByTagName("td")[0];
-            var tdState = tr[i].getElementsByTagName("td")[2];
-
-            // Set variable to hold hold Datetime cell text
-            var cellDate = tdDate.textContent;
-            var cellState = tdState.textContent;
-
-            // If cell Datetime is selected,
-            if (cellDate === dateValue) {
-                // then leave that row in visible format.
-                tr[i].style.display = "";
-            }
-            // If State is selected,
-            else if (cellState === stateValue) {
-                // then leave that row in visible format.
-                tr[i].style.display = "";
-            }
-            // If cell value is not equal to dateValue and stateValue,
-            else {
-                // then apply invisible format to row.
-                tr[i].style.display = "none";
-            }
-
-        }
-    }
+    // }
   };
 
 init();
