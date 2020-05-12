@@ -88,14 +88,33 @@ function runEnter() {
     var tr = table.getElementsByTagName("tr");
 
     // If inputValue is null,
-    if (dateValue === "" && stateValue === "") {
-        // then apply visible formatting to all rows.
+
+    // if (dateValue === "" && stateValue === "") {
+    //     // then apply visible formatting to all rows.
+    //     for (i=1; i<tr.length; i++) {
+    //         tr[i].style.display = "";
+    //     }
+    // }
+    // // If not, then filter rows, and hide unfiltered rows.
+    // else {
+
+    // If both cellDate and cellState are selected,
+    if (dateValue !== "" && stateValue !== "") {
         for (i=1; i<tr.length; i++) {
+            // Set variable to hold data for Datetime cell of row
+            var tdDate = tr[i].getElementsByTagName("td")[0];
+            var tdState = tr[i].getElementsByTagName("td")[2];
+    
+            // Set variable to hold hold Datetime cell text
+            var cellDate = tdDate.textContent;
+            var cellState = tdState.textContent;
+
+            // then leave that row in visible format.
             tr[i].style.display = "";
         }
     }
-    // If not, then filter rows, and hide unfiltered rows.
-    else {
+    // If only one or none is selected,
+    else { 
         // Loop through table
         for (i=1; i<tr.length; i++) {
             // Set variable to hold data for Datetime cell of row
@@ -103,16 +122,11 @@ function runEnter() {
             var tdState = tr[i].getElementsByTagName("td")[2];
 
             // Set variable to hold hold Datetime cell text
-            var cellDate = tdDate.textContent || tdDate.innerText;
-            var cellState = tdState.textContent || tdState.innerText;
+            var cellDate = tdDate.textContent;
+            var cellState = tdState.textContent;
 
-            // If cellDate and cellState are selected,
-            if (cellDate === dateValue && cellState === stateValue) {
-                // then leave that row in visible format.
-                tr[i].style.display = "";
-            }
             // If cell Datetime is selected,
-            else if (cellDate === dateValue) {
+            if (cellDate === dateValue) {
                 // then leave that row in visible format.
                 tr[i].style.display = "";
             }
@@ -126,6 +140,7 @@ function runEnter() {
                 // then apply invisible format to row.
                 tr[i].style.display = "none";
             }
+
         }
     }
   };
